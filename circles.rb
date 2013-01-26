@@ -57,10 +57,12 @@ class Circle
   def update_me
     @x += @xmove
     @y += @ymove
-    @x = 0 - @radius if @x > width + @radius
-    @x = width + @radius if @x < 0 - @radius
-    @y = 0 - @radius if @y > height + @radius
-    @y = height + @radius if @y < 0 - @radius
+    right = width + @radius
+    @x = 0 - @radius if @x > right
+    @x = right if @x < 0 - @radius
+    bottom = height + @radius
+    @y = 0 - @radius if @y > bottom
+    @y = bottom if @y < 0 - @radius
 
     self.class.instances.each do |n|
       if n != self
