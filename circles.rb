@@ -65,7 +65,8 @@ class Circle
     @y = bottom if @y < 0 - @radius
 
     self.class.instances.each do |n|
-      if n != self
+      next if n == self
+
         dis = dist @x, @y, n.x, n.y
         overlap = dis - @radius - n.radius
         if overlap < 0
@@ -76,7 +77,6 @@ class Circle
           overlap *= -1
           ellipse mid_x, mid_y, overlap, overlap
         end
-      end
     end
 
 
