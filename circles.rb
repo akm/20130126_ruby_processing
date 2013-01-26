@@ -12,7 +12,7 @@ end
 
 def draw
   background 255
-  @circle_ary.eachd{|n| n.update_me }
+  @circle_ary.each{|n| n.update_me }
 end
 
 def mouse_released
@@ -35,6 +35,9 @@ class Circle
     @linecol = rand_color
     @fillcol = rand_color
     @alpha = rand(256)
+    @xmove = rand(10) - 5
+    @ymove = rand(10) - 5
+    @xmoce, @ymove = 1, 1 if @xmove == 0 && @ymove == 0
   end
 
   def draw_me
@@ -44,6 +47,16 @@ class Circle
     stroke @linecol, 150
     no_fill
     ellipse @x, @y, 10, 10
+  end
+
+  def update_me
+    @x += @xmove
+    @y += @ymove
+    @x = 0 - @radius if @x > width + @radius
+    @x = width + @radius if @x < 0 - @radius
+    @y = 0 - @radius if @y > height + @radius
+    @y = height + @radius if @y < 0 - @radius
+    draw_me
   end
 
   def rand_color
