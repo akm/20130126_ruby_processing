@@ -66,19 +66,17 @@ class Circle
 
     self.class.instances.each do |n|
       next if n == self
-
-        dis = dist @x, @y, n.x, n.y
-        overlap = dis - @radius - n.radius
-        if overlap < 0
-          mid_x = (@x + n.x) / 2
-          mid_y = (@y + n.y) / 2
-          stroke 0, 100
-          no_fill
-          overlap *= -1
-          ellipse mid_x, mid_y, overlap, overlap
-        end
+      dis = dist @x, @y, n.x, n.y
+      overlap = dis - @radius - n.radius
+      if overlap < 0
+        mid_x = (@x + n.x) / 2
+        mid_y = (@y + n.y) / 2
+        stroke 0, 100
+        no_fill
+        overlap *= -1
+        ellipse mid_x, mid_y, overlap, overlap
+      end
     end
-
 
     draw_me
   end
