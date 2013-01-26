@@ -11,7 +11,7 @@ end
 
 def draw
   background 255
-  Circle.instances.each{|n| n.update_me }
+  Circle.instances.each(&:update_me)
 end
 
 def mouse_released
