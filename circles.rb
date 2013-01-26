@@ -6,13 +6,13 @@ def setup
   smooth
   stroke_weight 1
   fill 150, 150
-  @circle_ary = []
+  $circle_ary = []
   draw_circles
 end
 
 def draw
   background 255
-  @circle_ary.each{|n| n.update_me }
+  $circle_ary.each{|n| n.update_me }
 end
 
 def mouse_released
@@ -21,12 +21,14 @@ end
 
 def draw_circles
   10.times do
-    @circle_ary << Circle.new
-    @circle_ary.last.draw_me
+    $circle_ary << Circle.new
+    $circle_ary.last.draw_me
   end
 end
 
 class Circle
+
+  attr_accessor :x, :y, :radius
 
   def initialize
     @x = rand(width)
@@ -56,6 +58,23 @@ class Circle
     @x = width + @radius if @x < 0 - @radius
     @y = 0 - @radius if @y > height + @radius
     @y = height + @radius if @y < 0 - @radius
+
+    $circle_ary.each do |n|
+      if n != self
+        dis = dist @x, @y, n.x, n.y
+        overlap = dis - @radius - n.radius
+        if overlap < 0
+          mid_x = (@x + n.x) / 2
+          mid_y = (@y + n.y) / 2
+          stroke 0, 100
+          no_fill
+          overlap *= -1
+          ellipse mid_x, mid_y, overlap, overlap
+        end
+      end
+    end
+
+
     draw_me
   end
 
