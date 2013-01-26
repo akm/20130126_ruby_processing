@@ -6,13 +6,12 @@ def setup
   smooth
   stroke_weight 1
   fill 150, 150
-  $circle_ary = []
   draw_circles
 end
 
 def draw
   background 255
-  $circle_ary.each{|n| n.update_me }
+  Circle.instances.each{|n| n.update_me }
 end
 
 def mouse_released
@@ -21,12 +20,16 @@ end
 
 def draw_circles
   10.times do
-    $circle_ary << Circle.new
-    $circle_ary.last.draw_me
+    Circle.instances << Circle.new
+    Circle.instances.last.draw_me
   end
 end
 
 class Circle
+
+  def self.instances
+    @instances ||= []
+  end
 
   attr_accessor :x, :y, :radius
 
@@ -59,7 +62,7 @@ class Circle
     @y = 0 - @radius if @y > height + @radius
     @y = height + @radius if @y < 0 - @radius
 
-    $circle_ary.each do |n|
+    self.class.instances.each do |n|
       if n != self
         dis = dist @x, @y, n.x, n.y
         overlap = dis - @radius - n.radius
