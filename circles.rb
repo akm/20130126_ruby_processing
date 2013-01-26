@@ -20,8 +20,7 @@ end
 
 def draw_circles
   10.times do
-    Circle.instances << Circle.new
-    Circle.instances.last.draw_me
+    Circle.new.draw_me
   end
 end
 
@@ -43,6 +42,7 @@ class Circle
     @xmove = rand(10) - 5
     @ymove = rand(10) - 5
     @xmoce, @ymove = 1, 1 if @xmove == 0 && @ymove == 0
+    self.class.instances << self
   end
 
   def draw_me
